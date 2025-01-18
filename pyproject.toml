@@ -1,0 +1,75 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "map-segmentation-2025"
+version = "0.1.0"
+description = "segmentation project based on PUTvision/LandCoverSeg"
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "MIT" }
+authors = [
+    { name = "Konrad Makowski", email = "konrad.makowski.1@put.poznan.pl" },
+    { name = "Jan Lubina", email = "jan.lubina@student.put.poznan.pl" },
+]
+
+dependencies = [
+    # PyTorch - Deep Learning Framework and Related Libraries
+    "torch==1.11.0",                    # PyTorch deep learning framework
+    "torchvision==0.12.0",             # Computer vision package for PyTorch
+    "pytorch-lightning==1.6.0",         # PyTorch training framework
+    "torchmetrics==0.7.3",             # Collection of ML metrics
+    
+    # Hydra - Configuration Management
+    "hydra-core",                       # Configuration framework
+    "hydra-colorlog",                   # Colored logging for Hydra
+    "hydra-optuna-sweeper",            # Hyperparameter optimization
+    
+    # Loggers
+    "neptune-client",                   # Experiment tracking and monitoring
+    
+    # Export Tools
+    "onnx",                            # Open Neural Network Exchange
+    "onnx-simplifier",                 # ONNX model optimization
+    
+    # Development and Code Quality Tools
+    "pre-commit",                      # Git hooks for code quality
+    "black",                           # Code formatting
+    "isort",                           # Import sorting
+    "flake8",                          # Code analysis
+    
+    # Core Dependencies
+    "zarr",                            # Fast data reading
+    "python-dotenv",                   # Loading env variables from .env file
+    "rich",                            # Beautiful text formatting in terminal
+    "pytest",                          # Testing framework
+    "sh",                              # For running bash commands in tests
+    "scikit-learn",                    # Used in callbacks
+    "jupyterlab",                      # Enhanced Jupyter notebooks
+    "opencv-python",                   # Image processing library
+    "albumentations",                  # Fast image augmentation library
+    "segmentation-models-pytorch",     # Segmentation models
+    "monai",                           # Metrics and losses for segmentation
+    "matplotlib",                      # Plotting and visualization
+]
+
+[project.urls]
+Homepage = "https://github.com/spicyholo/map-segmentation-2025"
+Repository = "https://github.com/spicyholo/map-segmentation-2025.git"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src"]
+
+[tool.black]
+line-length = 88
+target-version = ["py38"]
+
+[tool.isort]
+profile = "black"
+line_length = 88
+multi_line_output = 3
+
+[tool.flake8]
+max-line-length = 88
+extend-ignore = ["E203"] 
