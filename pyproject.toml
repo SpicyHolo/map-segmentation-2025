@@ -16,47 +16,49 @@ authors = [
 
 dependencies = [
     # PyTorch - Deep Learning Framework and Related Libraries
-    "torch==1.11.0",                    # PyTorch deep learning framework
-    "torchvision==0.12.0",             # Computer vision package for PyTorch
-    "pytorch-lightning==1.6.0",         # PyTorch training framework
-    "torchmetrics==0.7.3",             # Collection of ML metrics
+    "torch",                    # PyTorch deep learning framework
+    "torchvision",             # Computer vision package for PyTorch
+    "torchaudio",              # Audio processing package for PyTorch
+    "pytorch-lightning",         # PyTorch training framework
+    "torchmetrics",             # Collection of ML metrics
     
     # Hydra - Configuration Management
-    "hydra-core",                       # Configuration framework
-    "hydra-colorlog",                   # Colored logging for Hydra
-    "hydra-optuna-sweeper",            # Hyperparameter optimization
+    "hydra-core",               # Configuration framework
+    "hydra-colorlog",           # Colored logging for Hydra
+    "hydra-optuna-sweeper",     # Hyperparameter optimization
     
     # Loggers
-    "neptune-client",                   # Experiment tracking and monitoring
+    "neptune-client",          # Experiment tracking and monitoring
     
     # Export Tools
-    "onnx",                            # Open Neural Network Exchange
-    "onnx-simplifier",                 # ONNX model optimization
+    "onnx",                    # Open Neural Network Exchange
+    "onnxsim",                 # ONNX model optimization (correct package name)
     
     # Development and Code Quality Tools
-    "pre-commit",                      # Git hooks for code quality
-    "black",                           # Code formatting
-    "isort",                           # Import sorting
-    "flake8",                          # Code analysis
+    "pre-commit",              # Git hooks for code quality
+    "black",                   # Code formatting
+    "isort",                   # Import sorting
+    "flake8",                   # Code analysis
     
     # Core Dependencies
-    "zarr",                            # Fast data reading
-    "python-dotenv",                   # Loading env variables from .env file
-    "rich",                            # Beautiful text formatting in terminal
-    "pytest",                          # Testing framework
-    "sh",                              # For running bash commands in tests
-    "scikit-learn",                    # Used in callbacks
-    "jupyterlab",                      # Enhanced Jupyter notebooks
-    "opencv-python",                   # Image processing library
-    "albumentations",                  # Fast image augmentation library
-    "segmentation-models-pytorch",     # Segmentation models
-    "monai",                           # Metrics and losses for segmentation
-    "matplotlib",                      # Plotting and visualization
+    "zarr",                    # Fast data reading
+    "python-dotenv",           # Loading env variables from .env file
+    "rich",                    # Beautiful text formatting in terminal
+    "pytest",                   # Testing framework
+    "sh",                      # For running bash commands in tests
+    "scikit-learn",             # Used in callbacks
+    "jupyterlab",               # Enhanced Jupyter notebooks
+    "opencv-python",            # Image processing library
+    "albumentations",           # Fast image augmentation library
+    "segmentation-models-pytorch", # Segmentation models
+    "monai",                    # Metrics and losses for segmentation
+    "matplotlib",               # Plotting and visualization
 ]
 
 [project.urls]
 Homepage = "https://github.com/spicyholo/map-segmentation-2025"
 Repository = "https://github.com/spicyholo/map-segmentation-2025.git"
+
 
 [tool.hatch.build.targets.wheel]
 packages = ["src"]
