@@ -54,6 +54,7 @@ python -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 ```
+Also change everywherein the code LightningLoggerBase attribute to Logger (for newest veersion of pytorch-lighning)
 
 Install the project with Hatch:
 ```bash

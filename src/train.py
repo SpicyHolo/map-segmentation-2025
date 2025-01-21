@@ -6,8 +6,7 @@ import torch
 from omegaconf import DictConfig
 from onnxsim import simplify
 from pytorch_lightning import Callback, LightningDataModule, LightningModule, Trainer, seed_everything
-from pytorch_lightning.loggers import LightningLoggerBase
-from pytorch_lightning.loggers import Logger as LightningLoggerBase
+from pytorch_lightning.loggers import Logger
 from utils import utils
 
 log = utils.get_logger(__name__)
