@@ -52,6 +52,7 @@ python -m venv venv
 .\venv\Scripts\activate
 # On Linux
 source venv/bin/activate
+pip install -r requirements.txt
 ```
 
 Install the project with Hatch:
