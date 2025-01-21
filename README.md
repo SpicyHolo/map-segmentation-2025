@@ -55,6 +55,8 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 Also change everywherein the code LightningLoggerBase attribute to Logger (for newest veersion of pytorch-lighning)
+export NEPTUNE_API_TOKEN=""
+export NEPTUNE_PROJECT_NAME=""
 
 Install the project with Hatch:
 ```bash
