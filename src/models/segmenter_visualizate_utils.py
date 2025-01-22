@@ -32,9 +32,9 @@ def visualize_segmentation_predition(logger, x_s, y_s, y_pred_s, name='test_rand
 
         frame = cv2.addWeighted(x, 0.3, result_img, 0.7, 0)
         
-        logger.log_image(
-                    name,
-                    File.as_image(np.float32(frame)*1./255.)
-                )
+        # logger.log_image(
+        #             name,
+        #             File.as_image(np.float32(frame)*1./255.)
+        #         )
 
         break

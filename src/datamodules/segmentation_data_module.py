@@ -6,6 +6,7 @@ from pathlib import Path
 from random import Random
 from typing import Optional, List, Tuple
 from glob import glob 
+from typing import Dict
 
 import albumentations as A
 import cv2
@@ -18,6 +19,7 @@ class SegmentationDataModule(LightningDataModule):
     def __init__(self,
                  data_path: Path,
                  dataset: Dataset,
+                 datasets: Dict[str, Dict[str, str]],
                  augment: bool,
                  batch_size: int,
                  image_size: Tuple[int, int],
@@ -32,6 +34,7 @@ class SegmentationDataModule(LightningDataModule):
 
         self._data_root = Path(data_path)
         self._dataset = dataset
+        self._datasets = datasets
         self._augment = augment
         self._batch_size = batch_size
         self._image_size = image_size
@@ -69,7 +72,13 @@ class SegmentationDataModule(LightningDataModule):
 
     def setup(self, stage: Optional[str] = None):
         # Get all image files from data directory
-        all_images = [f.name for f in self._data_root.glob("*.jpg")]  # Adjust pattern if needed
+        all_images = []
+        coco_paths = []
+        for dataset_name, dataset_info in self._datasets.items():
+            dataset_path = Path(dataset_info['data_path'])
+            images = [str(f) for f in dataset_path.glob("*.jpg")]
+            all_images.extend(images)
+            coco_paths.append(Path(dataset_info['coco_path']))
         
         if len(all_images) == 0:
             raise ValueError(f"No images found in {self._data_root}")
@@ -93,6 +102,7 @@ class SegmentationDataModule(LightningDataModule):
                 'data_root': self._data_root,
                 'images_list': train_split,
                 'augmentations': self._augmentations if self._augment else self._transforms,
+                'coco_paths': coco_paths  # Dodano listę ścieżek do plików COCO
             })
 
         self._valid_dataset: Dataset = hydra.utils.instantiate({
@@ -100,6 +110,7 @@ class SegmentationDataModule(LightningDataModule):
                 'data_root': self._data_root,
                 'images_list': valid_split,
                 'augmentations': self._transforms,
+                'coco_paths': coco_paths  # Dodano listę ścieżek do plików COCO
             })
 
         self._test_dataset: Dataset = hydra.utils.instantiate({
@@ -107,6 +118,7 @@ class SegmentationDataModule(LightningDataModule):
                 'data_root': self._data_root,
                 'images_list': test_split,
                 'augmentations': self._transforms,
+                'coco_paths': coco_paths  # Dodano listę ścieżek do plików COCO
             })
 
         # Print split information
