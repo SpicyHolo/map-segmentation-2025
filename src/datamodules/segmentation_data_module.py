@@ -1,3 +1,5 @@
+from sklearn.model_selection import train_test_split
+
 import itertools
 from collections import deque
 from pathlib import Path
@@ -12,7 +14,6 @@ import hydra
 from pytorch_lightning import LightningDataModule
 from torch.utils.data import DataLoader, Dataset
 
-
 class SegmentationDataModule(LightningDataModule):
     def __init__(self,
                  data_path: Path,
@@ -23,8 +24,9 @@ class SegmentationDataModule(LightningDataModule):
                  image_mean: Tuple[float, float, float],
                  image_std: Tuple[float, float, float],
                  number_of_workers: int,
-                 number_of_splits: int,
-                 current_split: int
+                 val_size: float = 0.1,
+                 test_size: float = 0.2,
+                 random_state: int = 42
                  ):
         super().__init__()
 
@@ -36,8 +38,9 @@ class SegmentationDataModule(LightningDataModule):
         self._image_mean = image_mean
         self._image_std = image_std
         self._number_of_workers = number_of_workers
-        self._number_of_splits = number_of_splits
-        self._current_split = current_split
+        self._val_size = val_size
+        self._test_size = test_size
+        self._random_state = random_state
 
         self._train_dataset = None
         self._valid_dataset = None
@@ -56,7 +59,8 @@ class SegmentationDataModule(LightningDataModule):
             A.ISONoise(color_shift=(0.01, 0.1)),
             # geometry augmentations
             A.Affine(rotate=(-5, 5), translate_px=(-10, 10), scale=(0.9, 1.1)),
-            A.Flip(),
+            A.HorizontalFlip(),
+            A.VerticalFlip(),
             # transforms
             A.RandomCrop(self._image_size[0], self._image_size[1], always_apply=True),
             A.Normalize(mean=self._image_mean, std=self._image_std),
@@ -64,15 +68,25 @@ class SegmentationDataModule(LightningDataModule):
         ])
 
     def setup(self, stage: Optional[str] = None):
+        # Get all image files from data directory
+        all_images = [f.name for f in self._data_root.glob("*.jpg")]  # Adjust pattern if needed
         
-        with open(str(self._data_root) + '/train.txt') as f:
-            train_split = f.read().split('\n')[:-1]
+        if len(all_images) == 0:
+            raise ValueError(f"No images found in {self._data_root}")
 
-        with open(str(self._data_root) + '/val.txt') as f:
-            valid_split = f.read().split('\n')[:-1]
+        # First split: separate test set
+        train_val_split, test_split = train_test_split(
+            all_images,
+            test_size=self._test_size,
+            random_state=self._random_state
+        )
 
-        with open(str(self._data_root) + '/test.txt') as f:
-            test_split = f.read().split('\n')[:-1]
+        # Second split: separate validation set from training set
+        train_split, valid_split = train_test_split(
+            train_val_split,
+            test_size=self._val_size/(1-self._test_size),  # Adjust for remaining data
+            random_state=self._random_state
+        )
 
         self._train_dataset: Dataset = hydra.utils.instantiate({
                 '_target_': self._dataset,
@@ -94,6 +108,13 @@ class SegmentationDataModule(LightningDataModule):
                 'images_list': test_split,
                 'augmentations': self._transforms,
             })
+
+        # Print split information
+        print("\nDataset Split Summary:")
+        print(f"Total images: {len(all_images)}")
+        print(f"Training set: {len(train_split)} images")
+        print(f"Validation set: {len(valid_split)} images")
+        print(f"Test set: {len(test_split)} images")
 
     def train_dataloader(self):
         return DataLoader(
