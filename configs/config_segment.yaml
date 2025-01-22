@@ -9,7 +9,7 @@ experiment: null
 work_dir: ${hydra:runtime.cwd}
 
 # path to folder with data
-data_dir: ${work_dir}/data/images
+data_dir: ${work_dir}/data/better
 
 #### MODE ####
 debug_mode: False # disable loggers
@@ -33,7 +33,7 @@ model:
   model_name: DeepLabV3Plus
   encoder_name: tu-semnasnet_100
   input_channels: 3
-  classes: ['non_permeable']
+  classes: ['impervious-surfaces']
   loss_function: FocalDice
   lr: 1e-4
   lr_patience: 40
@@ -44,6 +44,13 @@ datamodule:
   _target_: src.datamodules.segmentation_data_module.SegmentationDataModule
   data_path: ${data_dir}
   dataset: src.datamodules.datasets.nonPermeableSeg_dataset.nonPermeableSegDataset
+  # datasets:
+  #   dataset_1:
+  #     data_path: ${data_dir}/images_1
+  #     coco_path: ${data_dir}/coco_1.json
+  #   dataset_2:
+  #     data_path: ${data_dir}/images_2
+  #     coco_path: ${data_dir}/coco_2.json
   number_of_workers: 8
   batch_size: 8
   image_size: [ 512, 512 ]

@@ -68,7 +68,7 @@ def visualize_dataset(data_root: Path, images_list: List[str]):
 
 if __name__ == "__main__":
     # Example usage
-    data_root = Path("data")
+    data_root = Path("data/worse")
     # Get list of image files from your data directory
     images_list = [f.name for f in data_root.glob("*.jpg")]
     
