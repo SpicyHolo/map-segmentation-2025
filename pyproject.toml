@@ -1,77 +1,49 @@
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
 
-[project]
+[tool.poetry]
 name = "map-segmentation-2025"
 version = "0.1.0"
-description = "segmentation project based on PUTvision/LandCoverSeg"
+description = "Segmentation project based on PUTvision/LandCoverSeg"
+authors = ["Konrad Makowski <konrad.makowski.1@put.poznan.pl>", "Jan Lubina <jan.lubina@student.put.poznan.pl>"]
+license = "MIT"
 readme = "README.md"
-requires-python = ">=3.8"
-license = { text = "MIT" }
-authors = [
-    { name = "Konrad Makowski", email = "konrad.makowski.1@put.poznan.pl" },
-    { name = "Jan Lubina", email = "jan.lubina@student.put.poznan.pl" },
-]
+homepage = "https://github.com/spicyholo/map-segmentation-2025"
+repository = "https://github.com/spicyholo/map-segmentation-2025.git"
+keywords = ["segmentation", "pytorch", "deep learning"]
 
-dependencies = [
-    # PyTorch - Deep Learning Framework and Related Libraries
-    "torch",                    # PyTorch deep learning framework
-    "torchvision",             # Computer vision package for PyTorch
-    "torchaudio",              # Audio processing package for PyTorch
-    "pytorch-lightning",         # PyTorch training framework
-    "torchmetrics",             # Collection of ML metrics
-    
-    # Hydra - Configuration Management
-    "hydra-core",               # Configuration framework
-    "hydra-colorlog",           # Colored logging for Hydra
-    "hydra-optuna-sweeper",     # Hyperparameter optimization
-    
-    # Loggers
-    "neptune-client",          # Experiment tracking and monitoring
-    
-    # Export Tools
-    "onnx",                    # Open Neural Network Exchange
-    "onnxsim",                 # ONNX model optimization (correct package name)
-    
-    # Development and Code Quality Tools
-    "pre-commit",              # Git hooks for code quality
-    "black",                   # Code formatting
-    "isort",                   # Import sorting
-    "flake8",                   # Code analysis
-    
-    # Core Dependencies
-    "zarr",                    # Fast data reading
-    "python-dotenv",           # Loading env variables from .env file
-    "rich",                    # Beautiful text formatting in terminal
-    "pytest",                   # Testing framework
-    "sh",                      # For running bash commands in tests
-    "scikit-learn",             # Used in callbacks
-    "jupyterlab",               # Enhanced Jupyter notebooks
-    "opencv-python",            # Image processing library
-    "albumentations",           # Fast image augmentation library
-    "segmentation-models-pytorch", # Segmentation models
-    "monai",                    # Metrics and losses for segmentation
-    "matplotlib",               # Plotting and visualization
-]
+[tool.poetry.dependencies]
+python = ">=3.8"
+torch = {version = "*", source = "torch_cuda"}
+torchvision = {version = "*", source = "torch_cuda"}
+torchaudio = {version = "*", source = "torch_cuda"}
+pytorch-lightning = "*"
+torchmetrics = "*"
+hydra-core = "*"
+hydra-colorlog = "*"
+hydra-optuna-sweeper = "*"
+neptune-client = "*"
+onnx = "*"
+onnxsim = "*"
+pre-commit = "*"
+black = "*"
+isort = "*"
+flake8 = "*"
+zarr = "*"
+python-dotenv = "*"
+rich = "*"
+pytest = "*"
+sh = "*"
+scikit-learn = "*"
+jupyterlab = "*"
+opencv-python = "*"
+albumentations = "*"
+segmentation-models-pytorch = "*"
+monai = "*"
+matplotlib = "*"
 
-[project.urls]
-Homepage = "https://github.com/spicyholo/map-segmentation-2025"
-Repository = "https://github.com/spicyholo/map-segmentation-2025.git"
-
-
-[tool.hatch.build.targets.wheel]
-packages = ["src"]
-
-[tool.black]
-line-length = 88
-target-version = ["py38"]
-
-[tool.isort]
-profile = "black"
-line_length = 88
-multi_line_output = 3
-
-[tool.flake8]
-max-line-length = 88
-extend-ignore = ["E203"] 
+[[tool.poetry.source]]
+name = "torch_cuda"
+url = "https://download.pytorch.org/whl/cu124"
+priority = "explicit"

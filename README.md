@@ -3,38 +3,6 @@ based on https://github.com/PUTvision/LandCoverSeg
 
 ## Build Instructions
 
-### Prerequisites
-
-Before building the project, you need to install CMake and Hatch:
-
-#### Windows
-
-Install CMake:
-- Download the installer from [CMake official website](https://cmake.org/download/)
-- Run the installer and make sure to add CMake to the system PATH
-- Verify installation by opening Command Prompt and running:
-```bash
-cmake --version
-```
-
-Install Hatch:
-```bash
-pip install hatch
-```
-
-#### Linux (Ubuntu/Debian)
-
-Install CMake:
-```bash
-sudo apt update
-sudo apt install cmake
-```
-
-Install Hatch:
-```bash
-pip install hatch
-```
-
 ### Building the Project
 
 After installing the prerequisites:
@@ -50,20 +18,13 @@ Create and activate a virtual environment:
 python -m venv venv
 # On Windows
 .\venv\Scripts\activate
+
 # On Linux
 source venv/bin/activate
 pip install -r requirements.txt
 ```
-Also change everywherein the code LightningLoggerBase attribute to Logger (for newest veersion of pytorch-lighning)
-export NEPTUNE_API_TOKEN=""
-export NEPTUNE_PROJECT_NAME=""
-
-Install the project with Hatch:
-```bash
-hatch build
-```
 
 Opitionally: Add CUDA support
 ```bash
-pip3 install torch torchvision torchaudio --force-reinstall --index-url https://download.pytorch.org/whl/cu124
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
 ```

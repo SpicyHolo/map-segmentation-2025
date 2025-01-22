@@ -1,8 +1,9 @@
 # --------- pytorch --------- #
-torch #==1.11.0
-torchvision #==0.12.0
-pytorch-lightning #==1.6.0
-torchmetrics #==0.7.3
+torch
+torchvision
+pytorch-lightning
+torchmetrics
+scikit-learn
 
 # --------- hydra --------- #
 hydra-core
@@ -10,11 +11,11 @@ hydra-colorlog
 hydra-optuna-sweeper
 
 # --------- loggers --------- #
-neptune-client
+neptune
 
 # --------- export --------- #
 onnx
-onnx-simplifier
+onnxsim
 
 # --------- linters --------- #
 pre-commit      # hooks for applying linters on commit
