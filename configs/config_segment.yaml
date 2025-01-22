@@ -25,7 +25,7 @@ trainer:
   accelerator: cuda  # Use 'gpu' or 'cuda' depending on your setup
   devices: 1  # Number of GPUs to use
   precision: 32
-  max_epochs: 2
+  max_epochs: 30
 
 #### MODEL ####
 model:
@@ -33,7 +33,7 @@ model:
   model_name: DeepLabV3Plus
   encoder_name: tu-semnasnet_100
   input_channels: 3
-  classes: ['non_permeable']
+  classes: ['nieprzepuszczalne']
   loss_function: FocalDice
   lr: 1e-4
   lr_patience: 40
