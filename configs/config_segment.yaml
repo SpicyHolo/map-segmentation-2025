@@ -25,14 +25,10 @@ trainer:
   accelerator: cuda  # Use 'gpu' or 'cuda' depending on your setup
   devices: 1  # Number of GPUs to use
   precision: 32
-<<<<<<< HEAD
-  max_epochs: 30
-=======
   max_epochs: 10
 
 # Add checkpoint path at root level
 ckpt_path: null  # Will be overridden via command line when needed
->>>>>>> 06b52f4 (Added resume_from_checkpoint functionality)
 
 #### MODEL ####
 model:
@@ -40,11 +36,7 @@ model:
   model_name: DeepLabV3Plus
   encoder_name: tu-semnasnet_100
   input_channels: 3
-<<<<<<< HEAD
-  classes: ['nieprzepuszczalne']
-=======
   classes: ['impervious-surfaces']
->>>>>>> 06b52f4 (Added resume_from_checkpoint functionality)
   loss_function: FocalDice
   lr: 1e-4
   lr_patience: 40
@@ -59,9 +51,9 @@ datamodule:
     dataset_1:
       data_path: ${data_dir}/better
       coco_path: ${data_dir}/better/_annotations.coco.json
-    # dataset_2:
-    #   data_path: ${data_dir}/worse
-    #   coco_path: ${data_dir}/worse/_annotations.coco.json
+    dataset_2:
+      data_path: ${data_dir}/worse
+      coco_path: ${data_dir}/worse/_annotations.coco.json
   number_of_workers: 8
   batch_size: 8
   image_size: [ 512, 512 ]
