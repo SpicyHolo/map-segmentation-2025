@@ -9,31 +9,12 @@ import numpy as np
 
 def get_palette(num_classes):
     # prepare and return palette
-    # 'background', 'buildings', 'woodlands', 'water', 'roads'
-        # palette = [
-        #     0, 0, 0,
-        #     255,0,0,
-        #     0,255,0,
-        #     0,0,255,
-        #     255,255,0,
-        # ]
-        
-        # 'background', 'building_flooded', 'building_non_flooded', 'road_flooded', 'road_non_flooded', 'water', 'tree', 'vehicle', 'pool', 'grass'
+        # 'non_permable"
         palette = [
-            0,0,0,
             153,51,0,
-            255,0,0,
-            255,204,0,
-            255,255,0,
-            0,0,255,
-            0,255,0,
-            128,0,128,
-            0,204,255,
-            51,153,102
         ]
 
         return palette
-
 
 def visualize_segmentation_predition(logger, x_s, y_s, y_pred_s, name='test_random_mask'):
     palette = get_palette(x_s.shape[1])
