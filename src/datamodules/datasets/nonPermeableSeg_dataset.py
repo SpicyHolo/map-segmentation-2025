@@ -59,7 +59,6 @@ class nonPermeableSegDataset(Dataset):
             raise FileNotFoundError(f"Image file not found: {image_name}")
         
         # Load image
-        # print(f"siema siema, sciezka: {image_name}")
         frame = cv2.imread(f'{image_name}')
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         
