@@ -1,4 +1,5 @@
 from typing import List, Optional
+from pathlib import Path
 
 import hydra
 import onnx
@@ -50,10 +51,14 @@ def train(config: DictConfig) -> Optional[float]:
                 log.info(f"Instantiating logger <{lg_conf._target_}>")
                 logger.append(hydra.utils.instantiate(lg_conf))
 
+
     # Init lightning trainer
     log.info(f"Instantiating trainer <{config.trainer._target_}>")
     trainer: Trainer = hydra.utils.instantiate(
-        config.trainer, callbacks=callbacks, logger=logger, _convert_="partial"
+        config.trainer,
+        callbacks=callbacks,
+        logger=logger,
+        _convert_="partial"
     )
 
     # Send some parameters from config to all lightning loggers
@@ -70,14 +75,21 @@ def train(config: DictConfig) -> Optional[float]:
     # Train the model
     log.info("Starting training!")
     if not config.eval_mode:
-        trainer.fit(model=model, datamodule=datamodule, ckpt_path=config.get("resume_from_checkpoint"))
+        trainer.fit(
+            model=model, 
+            datamodule=datamodule,
+            ckpt_path=config.get("ckpt_path")
+        )
 
-    # Evaluate model on test set, using the best model achieved during training
+    # Evaluate model on test set
     if config.get("test_after_training"):
         log.info("Starting testing!")
         if config.eval_mode:
-            trainer.test(model=model, datamodule=datamodule,
-                         ckpt_path=config.trainer.resume_from_checkpoint)
+            trainer.test(
+                model=model, 
+                datamodule=datamodule,
+                ckpt_path=config.get("ckpt_path")
+            )
         else:
             trainer.test(model=model, datamodule=datamodule, ckpt_path='best')
 
