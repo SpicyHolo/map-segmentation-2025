@@ -70,7 +70,7 @@ def train(config: DictConfig) -> Optional[float]:
     # Train the model
     log.info("Starting training!")
     if not config.eval_mode:
-        trainer.fit(model=model, datamodule=datamodule)
+        trainer.fit(model=model, datamodule=datamodule, ckpt_path=config.get("resume_from_checkpoint"))
 
     # Evaluate model on test set, using the best model achieved during training
     if config.get("test_after_training"):

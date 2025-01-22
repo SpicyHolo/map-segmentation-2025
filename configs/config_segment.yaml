@@ -9,7 +9,7 @@ experiment: null
 work_dir: ${hydra:runtime.cwd}
 
 # path to folder with data
-data_dir: ${work_dir}/data/LandCover
+data_dir: ${work_dir}/data/images
 
 #### MODE ####
 debug_mode: False # disable loggers
@@ -17,15 +17,15 @@ eval_mode: False # skip train, require train.resume_from_checkpoint
 
 #### TRAINER ####
 strategy:
-  _target_: pytorch_lightning.strategies.DDPStrategy
+  _target_: src.pytorch_lightning.strategies.DDPStrategy
   find_unused_parameters: false
 
 trainer:
   _target_: pytorch_lightning.Trainer
-  gpus: 1
+  accelerator: cuda  # Use 'gpu' or 'cuda' depending on your setup
+  devices: 1  # Number of GPUs to use
   precision: 32
   max_epochs: 1000
-  resume_from_checkpoint: null
 
 #### MODEL ####
 model:
@@ -33,7 +33,7 @@ model:
   model_name: DeepLabV3Plus
   encoder_name: tu-semnasnet_100
   input_channels: 3
-  classes: ['background', 'building', 'woodland', 'water', 'road']
+  classes: ['non_permeable']
   loss_function: FocalDice
   lr: 1e-4
   lr_patience: 40
@@ -43,15 +43,16 @@ model:
 datamodule:
   _target_: src.datamodules.segmentation_data_module.SegmentationDataModule
   data_path: ${data_dir}
-  dataset: src.datamodules.datasets.landcoverseg_dataset.LandCoverDataset
+  dataset: src.datamodules.datasets.nonPermeableSeg_dataset.nonPermeableSegDataset
   number_of_workers: 8
   batch_size: 8
   image_size: [ 512, 512 ]
   image_mean: [ 0,0,0 ]
   image_std: [ 1, 1, 1 ]
-  augment: True
-  number_of_splits: None
-  current_split: None
+  augment: true
+  val_size: 0.1        # Added parameter
+  test_size: 0.2       # Added parameter
+  random_state: ${seed}  # Use the global seed
 
 
 #### CALLBACKS ####
@@ -77,8 +78,8 @@ callbacks:
 logger:
   neptune:
     _target_: pytorch_lightning.loggers.neptune.NeptuneLogger
-    api_key: ${oc.env:NEPTUNE_API_TOKEN}
-    project: ${oc.env:NEPTUNE_PROJECT_NAME}
+    api_key: ${oc.env:NEPTUNE_API_TOKEN,}
+    project: ${oc.env:NEPTUNE_PROJECT_NAME,}
     log_model_checkpoints: false
     name: ${name}
 

@@ -77,8 +77,8 @@ class Segmenter(pl.LightningModule):
 
         self.save_hyperparameters()
 
-    def optimizer_zero_grad(self, epoch, batch_idx, optimizer, optimizer_idx):
-        optimizer.zero_grad(set_to_none=True)
+#    def optimizer_zero_grad(self, epoch, batch_idx, optimizer, optimizer_idx):
+#        optimizer.zero_grad(set_to_none=True)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         return self.network.forward(x)
