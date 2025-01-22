@@ -25,7 +25,7 @@ trainer:
   accelerator: cuda  # Use 'gpu' or 'cuda' depending on your setup
   devices: 1  # Number of GPUs to use
   precision: 32
-  max_epochs: 1000
+  max_epochs: 2
 
 #### MODEL ####
 model:
