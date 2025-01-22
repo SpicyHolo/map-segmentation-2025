@@ -17,17 +17,17 @@ class IOUMetric(Metric):
     def update(self, inputs: torch.Tensor, targets: torch.Tensor):
         assert inputs.shape == targets.shape
         
-        inputs = torch.argmax(inputs, dim=1)
-        inputs = F.one_hot(inputs, num_classes=self._classes)
-
-        targets = torch.argmax(targets, dim=1)
-        targets = F.one_hot(targets, num_classes=self._classes)
+        # Binary threshold for sigmoid output
+        inputs = (inputs > 0.5).float()
         
+        # For binary segmentation, no need for argmax or one_hot
+        targets = targets.float()
+        
+        # Flatten for calculation
         targets = torch.flatten(targets, 1)
         inputs = torch.flatten(inputs, 1)
         
         intersection = torch.sum(targets * inputs, dim=1)
-    
         union = torch.sum(targets, dim=1) + torch.sum(inputs, dim=1) - intersection
         
         iou = (intersection + self._smooth) / (union + self._smooth)
