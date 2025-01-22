@@ -48,7 +48,7 @@ class Segmenter(pl.LightningModule):
             encoder_weights="imagenet",
             in_channels=self._input_channels,
             classes=len(self._classes),
-            activation=None
+            activation='sigmoid'
         )
 
         if loss_function == 'MAE':
@@ -67,8 +67,8 @@ class Segmenter(pl.LightningModule):
                 f'Unsupported loss function: {loss_function}')
 
         metrics = torchmetrics.MetricCollection({
-            'dice': DiceMetric(classes=len(self._classes)),
-            'iou': IOUMetric(classes=len(self._classes)),
+            'dice': DiceMetric(classes=1),
+            'iou': IOUMetric(classes=1),
         })
 
         self.train_metrics = metrics.clone('train_')
