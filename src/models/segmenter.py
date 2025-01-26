@@ -50,7 +50,8 @@ class Segmenter(pl.LightningModule):
             encoder_weights="imagenet",
             in_channels=self._input_channels,
             classes=len(self._classes),
-            activation='sigmoid'
+            activation='sigmoid',
+            encoder_depth=7
         )
 
         if loss_function == 'MAE':
