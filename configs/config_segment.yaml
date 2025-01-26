@@ -34,11 +34,11 @@ ckpt_path: null  # Will be overridden via command line when needed
 model:
   _target_: src.models.segmenter.Segmenter
   model_name: Segformer
-  encoder_name: efficientnet-b7
+  encoder_name: mit_b2
   input_channels: 3
   classes: ['impervious-surfaces']
   loss_function: FocalDice
-  lr: 1e-4
+  lr: 1e-3
   lr_patience: 40
   visualize_test_images: True
 
@@ -116,3 +116,76 @@ export:
 
 # seed for random number generators in pytorch, numpy and python.random
 seed: 42
+
+########################################################################################
+#                                     rodzaje encoderów
+# Rodzina ResNet
+# resnet18
+# resnet34
+# resnet50
+# resnet101
+# resnet152
+# Rodzina EfficientNet
+# efficientnet-b0
+# efficientnet-b1
+# efficientnet-b2
+# efficientnet-b3
+# efficientnet-b4
+# efficientnet-b5
+# efficientnet-b6
+# efficientnet-b7
+# Rodzina MobileNet
+# mobilenet_v2
+# mobilenet_v3_large
+# mobilenet_v3_small
+# Rodzina DenseNet
+# densenet121
+# densenet169
+# densenet201
+# densenet161
+# Rodzina VGG
+# vgg11
+# vgg13
+# vgg16
+# vgg19
+# Rodzina Inception
+# inceptionv3
+# Rodzina SE-ResNet
+# se_resnet50
+# se_resnet101
+# se_resnet152
+# Rodzina SE-ResNeXt
+# se_resnext50_32x4d
+# se_resnext101_32x4d
+# Rodzina SENet
+# senet154
+# Rodzina RegNet
+# regnetx_002
+# regnetx_004
+# regnetx_006
+# regnetx_008
+# regnetx_016
+# regnetx_032
+# regnetx_040
+# regnetx_064
+# regnetx_080
+# regnetx_120
+# regnetx_160
+# regnetx_320
+# Rodzina Mix Transformer (MiT) dla SegFormer
+# mit_b0
+# mit_b1
+# mit_b2
+# mit_b3
+# mit_b4
+# mit_b5Rodzina ResNet: Popularne modele CNN o różnej głębokości, używane do ekstrakcji cech z obrazów.
+# Rodzina EfficientNet: Modele CNN zoptymalizowane pod kątem wydajności i efektywności obliczeniowej.
+# Rodzina MobileNet: Modele CNN zoptymalizowane pod kątem urządzeń mobilnych.
+# Rodzina DenseNet: Modele CNN z gęstymi połączeniami między warstwami.
+# Rodzina VGG: Modele CNN o prostej architekturze, używane do ekstrakcji cech z obrazów.
+# Rodzina Inception: Modele CNN z wieloma ścieżkami obliczeniowymi, używane do ekstrakcji cech z obrazów.
+# Rodzina SE-ResNet: Modele ResNet z mechanizmem Squeeze-and-Excitation.
+# Rodzina SE-ResNeXt: Modele ResNeXt z mechanizmem Squeeze-and-Excitation.
+# Rodzina SENet: Modele CNN z mechanizmem Squeeze-and-Excitation.
+# Rodzina RegNet: Modele CNN zoptymalizowane pod kątem wydajności i efektywności obliczeniowej.
+# Rodzina Mix Transformer (MiT): Modele transformerowe używane w SegFormer, zoptymalizowane pod kątem segmentacji obrazów.
