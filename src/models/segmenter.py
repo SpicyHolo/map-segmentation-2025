@@ -39,6 +39,8 @@ class Segmenter(pl.LightningModule):
             self.network = smp.Unet
         elif self._model_name == 'DeepLabV3Plus':
             self.network = smp.DeepLabV3Plus
+        elif self._model_name == 'Segformer':
+            self.network = smp.Segformer
         else:
             raise NotImplementedError(
                 f'Unsupported model: {self._model_name}')

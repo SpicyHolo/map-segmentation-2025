@@ -25,7 +25,7 @@ trainer:
   accelerator: cuda  # Use 'gpu' or 'cuda' depending on your setup
   devices: 1  # Number of GPUs to use
   precision: 32
-  max_epochs: 10
+  max_epochs: 30
 
 # Add checkpoint path at root level
 ckpt_path: null  # Will be overridden via command line when needed
@@ -33,7 +33,7 @@ ckpt_path: null  # Will be overridden via command line when needed
 #### MODEL ####
 model:
   _target_: src.models.segmenter.Segmenter
-  model_name: DeepLabV3Plus
+  model_name: Segformer
   encoder_name: tu-semnasnet_100
   input_channels: 3
   classes: ['impervious-surfaces']
