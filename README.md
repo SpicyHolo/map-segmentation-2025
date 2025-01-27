@@ -34,13 +34,24 @@ pip install torch torchvision torchaudio --index-url https://download.pytorch.or
 We tested models trained on our single dataset and with the whole. 
 - The overall amount of images was 400 
 - There was no preprocessing implemented. We did not think any was necessary, given the complicated segmentation task. Pictures were resized.
-- TODO: store the dataset with annotations in XXX and provide a link here
+- [dataset](https://drive.google.com/drive/folders/1NFnOefuWQ-UJp2E-DoZdNioKm9o2PYEL?usp=sharing)
 - All pictures are .png, the annotations are in .json file with coco format.
 
 ## Training
-- Segformer TODO: parameters
-- TODO: what augmentation methods used
-- python run.py name=<some_name> 
+There were used two models for reference.  
+First was SegFormer, default parameters, encoder "efficientnet-b2"
+Results:
+
+| Metric     | Value                |
+|------------|----------------------|
+| test_dice  | 0.8568132519721985   |
+| test_iou   | 0.7683026790618896   |
+| test_loss  | 2.399618148803711    |
+
+
+TODO: second one 
+- augmentation methods were used, already implemented inside the template
+- python run.py name="some_name"
 
 ## Results
 - Example images from dataset (diverse), at least 4 images
@@ -48,9 +59,9 @@ We tested models trained on our single dataset and with the whole.
 - Metrics on the test and train dataset
 
 ## Trained model in ONNX ready for `Deepness` plugin
-- model uploaded to XXX and a LINK_HERE
-- model have to be in the ONNX format, including metadata required by `Deepness` plugin (spatial resolution, thresholds, ...)
-- name of the script used to convert the model to ONNX and add the metadata to it
+- [model](https://drive.google.com/drive/folders/1NFnOefuWQ-UJp2E-DoZdNioKm9o2PYEL?usp=sharing)
+- TODO: deepness parameters
+- python run.py name=landseg eval_mode=True ckpt_path=/home/jinlobana/map-segmentation-2025/outputs/2025-01-26/22-46-11/checkpoints/last.ckpt export.export_to_onnx=True
 
 ## Demo instructions and video
 - a short video of running the model in Deepness (no need for audio), preferably converted to GIF

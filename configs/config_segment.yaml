@@ -34,7 +34,7 @@ ckpt_path: null  # Will be overridden via command line when needed
 model:
   _target_: src.models.segmenter.Segmenter
   model_name: Segformer
-  encoder_name: mit_b2
+  encoder_name: efficientnet-b2
   input_channels: 3
   classes: ['impervious-surfaces']
   loss_function: FocalDice
