@@ -320,3 +320,6 @@ data/*
 
 # env variables
 *.env
+
+# onnx models
+*.onnx

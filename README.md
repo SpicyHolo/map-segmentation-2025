@@ -73,12 +73,16 @@ Results:
 - training: python run.py name="some_name"
 
 ## Results
-- Example images from dataset (diverse), at least 4 images
-- Examples of good and bad predictions, at least 4 images
-- Metrics on the test and train dataset
+### For SegFormer:
+![Original Image](./pictures/Seg.png)
+![Original Image](./pictures/Seg_deepness.png)
+### For Deeplab:
+![Original Image](./pictures/deeplab.png)
+![Original Image](./pictures/deeplab_deepness.png)
+
 
 ## Trained model in ONNX ready for `Deepness` plugin
-- [model](https://drive.google.com/drive/folders/1NFnOefuWQ-UJp2E-DoZdNioKm9o2PYEL?usp=sharing)
+- [model](https://drive.google.com/drive/folders/1NFnOefuWQ-UJp2E-DoZdNioKm9o2PYEL?usp=sharing), in catalog "model with metadata" are two models with configured metadata for deepness plugin for QGIS.
 - deepness parameters: 10cm/px, 512px
 - deepness doesnt support binary segmentation, it forces to use softmax
 - exporting to onyx: python run.py name=landseg eval_mode=True ckpt_path=path export.export_to_onnx=True
