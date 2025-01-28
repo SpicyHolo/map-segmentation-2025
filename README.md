@@ -41,13 +41,26 @@ We tested models trained on our single dataset and with the whole.
 There were used two models for reference.  
 First was SegFormer, default parameters, encoder "efficientnet-b2"
 Results:
-
+### SegFormer, encoder: efficientnet-b2
 | Metric     | Value                |
 |------------|----------------------|
 | test_dice  | 0.8568132519721985   |
 | test_iou   | 0.7683026790618896   |
 | test_loss  | 2.399618148803711    |
 
+### DeepLabV3Plus, encoder: tu-semnasnet_100
+| Test Metric      | DataLoader 0              |
+|------------------|---------------------------|
+| test_dice        | 0.7736                    |
+| test_iou         | 0.6625                    |
+| test_loss        | 0.3725                    |
+
+## UNet, resnet50
+| Test Metric      | DataLoader 0              |
+|------------------|---------------------------|
+| test_dice        | 0.8068                    |
+| test_iou         | 0.7092                    |
+| test_loss        | 0.3506                    |
 
 TODO: second one 
 - augmentation methods were used, already implemented inside the template
