@@ -25,7 +25,7 @@ trainer:
   accelerator: cuda  # Use 'gpu' or 'cuda' depending on your setup
   devices: 1  # Number of GPUs to use
   precision: 32
-  max_epochs: 30
+  max_epochs: 100
 
 # Add checkpoint path at root level
 ckpt_path: null  # Will be overridden via command line when needed
@@ -33,13 +33,13 @@ ckpt_path: null  # Will be overridden via command line when needed
 #### MODEL ####
 model:
   _target_: src.models.segmenter.Segmenter
-  model_name: Segformer
-  encoder_name: efficientnet-b2
+  model_name: SegFormer
+  encoder_name: mit_b2
   input_channels: 3
   classes: ['impervious-surfaces']
   loss_function: FocalDice
-  lr: 1e-3
-  lr_patience: 40
+  lr: 1e-4
+  lr_patience: 10
   visualize_test_images: True
 
 #### DATA ####
@@ -57,8 +57,8 @@ datamodule:
   number_of_workers: 8
   batch_size: 8
   image_size: [ 512, 512 ]
-  image_mean: [ 0,0,0 ]
-  image_std: [ 1, 1, 1 ]
+  image_mean: [0.42093384, 0.43188083, 0.41308475]
+  image_std: [0.17451693, 0.16675222, 0.163012]
   augment: true
   val_size: 0.1        # Added parameter
   test_size: 0.2       # Added parameter
