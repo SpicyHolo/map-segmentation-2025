@@ -43,4 +43,3 @@ def visualize_segmentation_predition(logger, x_s, y_s, y_pred_s, name='test_rand
             name=name
         )
 
-        break

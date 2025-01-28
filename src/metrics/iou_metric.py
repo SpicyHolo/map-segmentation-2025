@@ -18,7 +18,7 @@ class IOUMetric(Metric):
         assert inputs.shape == targets.shape
         
         # Binary threshold for sigmoid output
-        inputs = (inputs > 0.5).float()
+        inputs = (inputs > 0.7).float()
         
         # For binary segmentation, no need for argmax or one_hot
         targets = targets.float()

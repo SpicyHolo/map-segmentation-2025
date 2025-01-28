@@ -1,5 +1,6 @@
 from sklearn.model_selection import train_test_split
 
+import numpy as np
 import itertools
 from collections import deque
 from pathlib import Path
@@ -128,6 +129,8 @@ class SegmentationDataModule(LightningDataModule):
         print(f"Validation set: {len(valid_split)} images")
         print(f"Test set: {len(test_split)} images")
 
+        self.calculate_and_print_mean_std()
+
     def train_dataloader(self):
         return DataLoader(
             self._train_dataset, batch_size=self._batch_size, num_workers=self._number_of_workers,
@@ -145,3 +148,15 @@ class SegmentationDataModule(LightningDataModule):
             self._test_dataset, batch_size=self._batch_size, num_workers=self._number_of_workers,
             pin_memory=True
         )
+
+    def calculate_and_print_mean_std(self):
+        # Assuming the dataset returns images in the format (C, H, W)
+        all_images = []
+        for img, _ in self._train_dataset:
+            all_images.append(img.cpu().numpy())
+
+        all_images = np.array(all_images)
+        mean = np.mean(all_images, axis=(0, 2, 3))  # Mean across batch, height, width
+        std = np.std(all_images, axis=(0, 2, 3))    # Std across batch, height, width
+
+        print(f"Mean: {mean}, Std: {std}")

@@ -39,8 +39,14 @@ class Segmenter(pl.LightningModule):
             self.network = smp.Unet
         elif self._model_name == 'DeepLabV3Plus':
             self.network = smp.DeepLabV3Plus
-        elif self._model_name == 'Segformer':
+        elif self._model_name == 'LinkNet':
+            self.network = smp.LinkNet
+        elif self._model_name == 'PSPNet':
+            self.network = smp.PSPNet
+        elif self._model_name == 'SegFormer':
             self.network = smp.Segformer
+        elif self._model_name == 'FPN':
+            self.network = smp.FPN
         else:
             raise NotImplementedError(
                 f'Unsupported model: {self._model_name}')
@@ -123,17 +129,12 @@ class Segmenter(pl.LightningModule):
 
 
     def configure_optimizers(self):
-        self.optimizer = torch.optim.AdamW(self.parameters(), lr=0.001, weight_decay=0.0005)
+        optimizer = torch.optim.AdamW(self.parameters(), lr=self._lr, weight_decay=0.0005)
         
-        self.s = torch.optim.lr_scheduler.CosineAnnealingLR(
-                self.optimizer,
-                T_max=237,
-                eta_min=1e-7
-            )
-
-        sched = {
-               'scheduler': self.s,
-               'interval': 'step',
-            }
+        # Use ReduceLROnPlateau scheduler
+        scheduler = {
+            'scheduler': torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.5, patience=self._lr_patience, verbose=True),
+            'monitor': 'val_loss',  # Monitor validation loss
+        }
         
-        return [self.optimizer], [sched]
+        return [optimizer], [scheduler]
