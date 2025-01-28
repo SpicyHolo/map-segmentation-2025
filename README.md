@@ -55,16 +55,22 @@ Results:
 | test_iou         | 0.6625                    |
 | test_loss        | 0.3725                    |
 
-## UNet, resnet50
+### UNet, encoder: resnet50
 | Test Metric      | DataLoader 0              |
 |------------------|---------------------------|
 | test_dice        | 0.8068                    |
 | test_iou         | 0.7092                    |
 | test_loss        | 0.3506                    |
 
-TODO: second one 
+### Segformer, encoder: mit_b2
+| Test Metric      | DataLoader 0              |
+|------------------|---------------------------|
+| test_dice        | 0.8334                    |
+| test_iou         | 0.7376                    |
+| test_loss        | 0.3343                    |
+
 - augmentation methods were used, already implemented inside the template
-- python run.py name="some_name"
+- training: python run.py name="some_name"
 
 ## Results
 - Example images from dataset (diverse), at least 4 images
@@ -73,16 +79,10 @@ TODO: second one
 
 ## Trained model in ONNX ready for `Deepness` plugin
 - [model](https://drive.google.com/drive/folders/1NFnOefuWQ-UJp2E-DoZdNioKm9o2PYEL?usp=sharing)
-- TODO: deepness parameters
-- python run.py name=landseg eval_mode=True ckpt_path=/home/jinlobana/map-segmentation-2025/outputs/2025-01-26/22-46-11/checkpoints/last.ckpt export.export_to_onnx=True
-
-## Demo instructions and video
-- a short video of running the model in Deepness (no need for audio), preferably converted to GIF
-- what ortophoto to load in QGIS and what physical place to zoom-in. E.g. Poznan 2022 zoomed-in at PUT campus
-- showing the results of running the model
+- deepness parameters: 10cm/px, 512px
+- deepness doesnt support binary segmentation, it forces to use softmax
+- exporting to onyx: python run.py name=landseg eval_mode=True ckpt_path=path export.export_to_onnx=True
 
 ## People
 - Konrad Makowski, Jan Lubina
 
-## Other information
-Feel free to add other information here.
